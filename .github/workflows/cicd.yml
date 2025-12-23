@@ -61,16 +61,22 @@ jobs:
       ECR_REPOSITORY: bank-backendapi
       IMAGE_TAG: ${{ github.run_number }}
     steps:
-    - name: Checkout repository
-      env:
-          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
-          GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
-      run: |
-         git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Favour-ibeh/Kubernetes-manifest.git
-         
-         cd kubernetes-manifest
-         git config --global user.email "ibehfavourbensongmail.com"
-         git config --global user.name "Favour-ibe"
+      - name: Checkout Kubernetes manifest repo
+        uses: actions/checkout@v4
+        with:
+          repository: Favour-ibeh/Kubernetes-manifest
+          token: ${{ secrets.K8S_REPO_TOKEN }}
+          path: Kubernetes-manifest
+          fetch-depth: 1
+
+      - name: Update image tag and push
+        run: |
+          cd Kubernetes-manifest
+
+          # Configure Git
+          git config user.email "ibehfavourbenson@gmail.com"
+          git config user.name "Favour-ibe"
+
 
          sed -i "s+${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:.*+${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}+g" ./bank-project/backendapi.yaml
 
