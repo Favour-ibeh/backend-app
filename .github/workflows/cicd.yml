@@ -14,7 +14,7 @@ jobs:
     env:
       ECR_REGISTRY: 938882467274.dkr.ecr.us-east-1.amazonaws.com
       ECR_REPOSITORY: bank-backendapi
-      AWS_REGION: eu-east-1
+      AWS_REGION: us-east-1
       IMAGE_TAG: ${{ github.run_number }}
 
     steps:
