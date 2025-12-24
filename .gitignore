@@ -37,7 +37,6 @@ backend-key
 
 .env
 *.env 
-src/main/resources/application.properties/
 
 old-src/.env
 src/main/resources/application.properties
